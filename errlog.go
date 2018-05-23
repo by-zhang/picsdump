@@ -43,6 +43,7 @@ func NewLogger() (logger *Logger) {
 
 //print log and exit
 func (l *Logger)Fatal(msg string){
+	log.Println(msg)
 	l.lr.Fatal(msg)
 }
 

@@ -5,6 +5,7 @@ import(
 	"log"
 	"sync"
 	"os"
+	"flag"
 	
 	"github.com/google/gopacket"
 	"github.com/google/gopacket/pcap"
@@ -12,7 +13,7 @@ import(
 )
 
 var counter *Counter
-
+var fname = flag.String("f", "", "pcap. file to be read")
 func init(){
 	//pics type info
 	pixType := map[int]*PixType{}
@@ -42,7 +43,11 @@ func init(){
 func main(){
 	var handle *pcap.Handle
 	var tcp interface{}
-	handle, err := pcap.OpenOffline("a.cap")
+	flag.Parse()
+	if *fname == "" {
+		logger.Fatal("please input file as an argument with -f flag")
+	}
+	handle, err := pcap.OpenOffline(*fname)
 	if err != nil {
 		logger.Fatal(err.Error())
 	} 
